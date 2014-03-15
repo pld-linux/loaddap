@@ -1,0 +1,183 @@
+--- loaddap-3.7.2/ClientByte.cc.orig	2012-05-31 19:22:52.000000000 +0200
++++ loaddap-3.7.2/ClientByte.cc	2014-03-15 10:24:30.344202847 +0100
+@@ -94,7 +94,7 @@ ClientByte::print_val(FILE *os, string,
+       fprintf(os, "%s\n%s\n", type_name().c_str(), get_matlab_name().c_str());
+ 
+     if (numeric_to_float) {
+-	dods_float64 df = _buf;
++	dods_float64 df = d_buf;
+         if (ascii)
+             fprintf(os, "%lf ", df);
+         else
+@@ -102,9 +102,9 @@ ClientByte::print_val(FILE *os, string,
+     }
+     else {
+         if (ascii)
+-            fprintf(os, "%d ", (unsigned int)_buf);
++            fprintf(os, "%d ", (unsigned int)d_buf);
+         else
+-            (void)fwrite((void *)&_buf, sizeof(dods_byte), 1, os);
++            (void)fwrite((void *)&d_buf, sizeof(dods_byte), 1, os);
+     }
+ }
+ 
+--- loaddap-3.7.2/ClientFloat32.cc.orig	2012-05-31 19:22:55.000000000 +0200
++++ loaddap-3.7.2/ClientFloat32.cc	2014-03-15 10:27:16.194195889 +0100
+@@ -83,7 +83,7 @@ ClientFloat32::print_val(FILE *os, strin
+     DBG( cerr << "CF32: Translate: " << translate << ";" << endl;)
+ 
+     if (translate) {
+-        dods_float64 df = _buf;
++        dods_float64 df = d_buf;
+         if (ascii)
+             fprintf(os, "%lg ", df);
+         else
+@@ -91,9 +91,9 @@ ClientFloat32::print_val(FILE *os, strin
+     }
+     else {
+         if (ascii)
+-            fprintf(os, "%g ", (dods_float32)_buf);
++            fprintf(os, "%g ", (dods_float32)d_buf);
+         else
+-            fwrite((void *)&_buf, sizeof(dods_float32), 1, os);
++            fwrite((void *)&d_buf, sizeof(dods_float32), 1, os);
+     }   
+ }
+ 
+--- loaddap-3.7.2/ClientFloat64.cc.orig	2012-05-31 19:22:53.000000000 +0200
++++ loaddap-3.7.2/ClientFloat64.cc	2014-03-15 10:25:06.720867988 +0100
+@@ -77,9 +77,9 @@ ClientFloat64::print_val(FILE *os, strin
+       fprintf(os, "%s\n%s\n", type_name().c_str(), get_matlab_name().c_str());
+ 
+         if (ascii)
+-            fprintf(os, "%lf ", _buf);
++            fprintf(os, "%lf ", d_buf);
+         else
+-            fwrite((void *)&_buf, sizeof(dods_float64), 1, os);
++            fwrite((void *)&d_buf, sizeof(dods_float64), 1, os);
+ }
+ 
+ AttrTable &
+--- loaddap-3.7.2/ClientInt16.cc.orig	2012-05-31 19:22:52.000000000 +0200
++++ loaddap-3.7.2/ClientInt16.cc	2014-03-15 10:25:49.377532864 +0100
+@@ -77,7 +77,7 @@ ClientInt16::print_val(FILE *os, string,
+       fprintf(os, "%s\n%s\n", type_name().c_str(), get_matlab_name().c_str());
+ 
+     if (numeric_to_float) {
+-        dods_float64 df = _buf;
++        dods_float64 df = d_buf;
+         if (ascii)
+             fprintf(os, "%lf ", df);
+         else
+@@ -85,9 +85,9 @@ ClientInt16::print_val(FILE *os, string,
+     }
+     else {
+         if (ascii)
+-            fprintf(os, "%d ", (unsigned int)_buf);
++            fprintf(os, "%d ", (unsigned int)d_buf);
+         else
+-            fwrite((void *)&_buf, sizeof(dods_int16), 1, os);
++            fwrite((void *)&d_buf, sizeof(dods_int16), 1, os);
+     }   
+ }
+ 
+--- loaddap-3.7.2/ClientInt32.cc.orig	2012-05-31 19:22:52.000000000 +0200
++++ loaddap-3.7.2/ClientInt32.cc	2014-03-15 10:24:53.967535189 +0100
+@@ -77,7 +77,7 @@ ClientInt32::print_val(FILE *os, string,
+       fprintf(os, "%s\n%s\n", type_name().c_str(), get_matlab_name().c_str());
+ 
+     if (numeric_to_float) {
+-        dods_float64 df = _buf;
++        dods_float64 df = d_buf;
+         if (ascii)
+             fprintf(os, "%lf ", df);
+         else
+@@ -85,9 +85,9 @@ ClientInt32::print_val(FILE *os, string,
+     }
+     else {
+         if (ascii)
+-            fprintf(os, "%d ", (unsigned int)_buf);
++            fprintf(os, "%d ", (unsigned int)d_buf);
+         else
+-            (void)fwrite((void *)&_buf, sizeof(dods_int32), 1, os);
++            (void)fwrite((void *)&d_buf, sizeof(dods_int32), 1, os);
+     }
+ }
+ 
+--- loaddap-3.7.2/ClientStr.cc.orig	2012-05-31 19:22:50.000000000 +0200
++++ loaddap-3.7.2/ClientStr.cc	2014-03-15 10:25:20.130867424 +0100
+@@ -105,7 +105,7 @@ ClientStr::print_val(FILE *os, string, b
+     // Translate all string variables to Floats. jhrg 1/9/98.
+     if (string_to_float) {
+ 	char *ptr = NULL;
+-	const char *str = _buf.c_str();
++	const char *str = d_buf.c_str();
+ 	val = strtod(str, &ptr);
+ 	print_as_float = !(val == 0.0 && (ptr == str));
+ 
+@@ -113,7 +113,7 @@ ClientStr::print_val(FILE *os, string, b
+ 	    val = MakeNaN();
+ 	    print_as_float = true;
+ 	    if (warning) {
+-		cerr << "Could not translate `" << _buf << "' to a Float64,"
++		cerr << "Could not translate `" << d_buf << "' to a Float64,"
+ 		     << endl;
+ 		cerr << "interning as NaN (not a number: " << val 
+ 		     << ")" << endl;
+@@ -140,8 +140,8 @@ ClientStr::print_val(FILE *os, string, b
+ //	    os << type_name() << endl << get_matlab_name() << endl;
+ 
+         // There's no special case for ASCII since this is a String.
+-        fprintf(os, "%s\n", _buf.c_str());
+-//	os << _buf << endl;
++        fprintf(os, "%s\n", d_buf.c_str());
++//	os << d_buf << endl;
+     }
+ }
+ 
+--- loaddap-3.7.2/ClientUInt16.cc.orig	2012-05-31 19:22:55.000000000 +0200
++++ loaddap-3.7.2/ClientUInt16.cc	2014-03-15 10:27:02.717529786 +0100
+@@ -79,7 +79,7 @@ ClientUInt16::print_val(FILE *os, string
+       fprintf(os, "%s\n%s\n", type_name().c_str(), get_matlab_name().c_str());
+ 
+     if (numeric_to_float) {
+-        dods_float64 df = _buf;
++        dods_float64 df = d_buf;
+         if (ascii)
+             fprintf(os, "%lf ", df);
+         else
+@@ -87,9 +87,9 @@ ClientUInt16::print_val(FILE *os, string
+     }
+     else {
+         if (ascii)
+-            fprintf(os, "%u ", (unsigned int)_buf);
++            fprintf(os, "%u ", (unsigned int)d_buf);
+         else
+-            fwrite((void *)&_buf, sizeof(dods_uint16), 1, os);
++            fwrite((void *)&d_buf, sizeof(dods_uint16), 1, os);
+     }   
+ }
+ 
+--- loaddap-3.7.2/ClientUInt32.cc.orig	2012-05-31 19:22:55.000000000 +0200
++++ loaddap-3.7.2/ClientUInt32.cc	2014-03-15 10:25:36.510866740 +0100
+@@ -78,7 +78,7 @@ ClientUInt32::print_val(FILE *os, string
+       fprintf(os, "%s\n%s\n", type_name().c_str(), get_matlab_name().c_str());
+ 
+     if (numeric_to_float) {
+-        dods_float64 df = _buf;
++        dods_float64 df = d_buf;
+         if (ascii)
+             fprintf(os, "%lf ", df);
+         else
+@@ -86,9 +86,9 @@ ClientUInt32::print_val(FILE *os, string
+     }
+     else {
+         if (ascii)
+-            fprintf(os, "%u ", _buf);
++            fprintf(os, "%u ", d_buf);
+         else
+-            fwrite((void *)&_buf, sizeof(dods_uint32), 1, os);
++            fwrite((void *)&d_buf, sizeof(dods_uint32), 1, os);
+     }   
+ }
+ 
