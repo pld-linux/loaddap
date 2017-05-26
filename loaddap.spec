@@ -2,7 +2,7 @@ Summary:	The OPeNDAP Matlab Command Line Interface Client
 Summary(pl.UTF-8):	Klient linii poleceń Matlaba do OPeNDAP
 Name:		loaddap
 Version:	3.7.3
-Release:	3
+Release:	4
 License:	LGPL v2.1+
 Group:		Libraries
 Source0:	http://www.opendap.org/pub/source/%{name}-%{version}.tar.gz
@@ -52,7 +52,7 @@ do Matlaba/Octave.
 	MEXEXT=oct \
 	--with-matlab=/usr
 %{__make} \
-	MEX="/usr/bin/mkoctfile -I. -DHAVE_CONFIG_H" \
+	MEX="/usr/bin/mkoctfile -I. -DHAVE_CONFIG_H -I/usr/include/octave" \
 	MEXFLAGS= \
 	MEXLDADD=
 
