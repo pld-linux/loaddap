@@ -2,7 +2,7 @@ Summary:	The OPeNDAP Matlab Command Line Interface Client
 Summary(pl.UTF-8):	Klient linii poleceń Matlaba do OPeNDAP
 Name:		loaddap
 Version:	3.7.3
-Release:	5
+Release:	6
 License:	LGPL v2.1+
 Group:		Libraries
 Source0:	http://www.opendap.org/pub/source/%{name}-%{version}.tar.gz
