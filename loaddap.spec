@@ -2,21 +2,20 @@ Summary:	The OPeNDAP Matlab Command Line Interface Client
 Summary(pl.UTF-8):	Klient linii poleceń Matlaba do OPeNDAP
 Name:		loaddap
 Version:	3.7.3
-Release:	6
+Release:	7
 License:	LGPL v2.1+
 Group:		Libraries
-Source0:	http://www.opendap.org/pub/source/%{name}-%{version}.tar.gz
+Source0:	https://www.opendap.org/pub/source/%{name}-%{version}.tar.gz
 # Source0-md5:	9482c748418c38c6e26a2b63dfd5643b
-#Patch0:		%{name}-libdap.patch
 Patch0:		%{name}-includes.patch
 Patch1:		%{name}-octave.patch
-URL:		http://opendap.org/
+URL:		https://www.opendap.org/
 BuildRequires:	autoconf >= 2.68
 BuildRequires:	automake
 BuildRequires:	libdap-devel >= 3.12.0
 BuildRequires:	libstdc++-devel
 BuildRequires:	libtool >= 2:2
-BuildRequires:	octave-devel
+BuildRequires:	octave-devel >= 6
 BuildRequires:	pkgconfig
 Requires:	libdap >= 3.12.0
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)

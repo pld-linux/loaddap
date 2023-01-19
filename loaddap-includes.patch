@@ -8,41 +8,13 @@
  #include <string.h>
  #include <errno.h>
  #ifdef WIN32
---- loaddap-3.7.2/extend.c.orig	2012-05-31 19:22:55.000000000 +0200
-+++ loaddap-3.7.2/extend.c	2014-03-15 12:36:26.140537321 +0100
-@@ -46,6 +46,7 @@
- 
- static char id[]= { "$Id: extend.c 21443 2009-09-02 08:52:42Z dan $" };
- 
-+/* cannot use <stdbool.h>, it conflicts with mex.h for C */
- #include <stdio.h>
- #include <string.h>
- 
-@@ -840,7 +841,7 @@
- 	int status, nFields, idx, i, j;
- 	int numUniqueVariables;
- 	int start, next, count;
--	bool Found = false;
-+	bool Found = FALSE;
- 	const char *name;
- 	MLVars *structArray;
- 	mxArray *ret_array;
-@@ -875,7 +876,7 @@
- #endif
- 		for (i=0; i<count; i++) {
- 			if (strcmp(names[i], name)==0) {
--				Found = true;
-+				Found = TRUE;
- 			}
- 		}
- 		if ( !Found ) {
---- loaddap-3.7.2/process_values.c.orig	2012-05-31 19:22:54.000000000 +0200
-+++ loaddap-3.7.2/process_values.c	2014-03-15 12:36:47.487203091 +0100
-@@ -44,6 +44,7 @@
- static char id[] not_used = {"$Id: process_values.c 21569 2009-09-30 04:12:29Z jimg $"};
+--- loaddap-3.7.3/process_values.c.orig	2023-01-19 18:00:14.647338290 +0100
++++ loaddap-3.7.3/process_values.c	2023-01-19 18:00:55.880448244 +0100
+@@ -42,6 +42,7 @@
+ #include "config.h"
  
  #include <errno.h>
 +#include <stdio.h>
  #include <string.h>
+ #include <math.h>
  
- #include <mex.h>
