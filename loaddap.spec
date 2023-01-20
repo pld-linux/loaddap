@@ -15,7 +15,7 @@ BuildRequires:	automake
 BuildRequires:	libdap-devel >= 3.12.0
 BuildRequires:	libstdc++-devel
 BuildRequires:	libtool >= 2:2
-BuildRequires:	octave-devel >= 6
+BuildRequires:	octave-devel >= 2:6
 BuildRequires:	pkgconfig
 Requires:	libdap >= 3.12.0
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
